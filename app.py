@@ -1,17 +1,30 @@
 import streamlit as st
+import pandas as pd
+import sqlite3
 from datetime import date
+
 from database import (
     create_tables,
     add_transaction,
     get_total_by_type,
-    get_category_wise_expense,
-    get_monthly_expense
+    get_category_wise_expense
 )
 
-create_tables()
+from analytics import (
+    plot_category_expenses,
+    plot_monthly_expenses
+)
 
-st.set_page_config(page_title="Expense Tracker", layout="centered")
+# ------------------ PAGE CONFIG ------------------
+st.set_page_config(
+    page_title="Expense Tracker",
+    layout="wide"
+)
+
 st.title("💰 Expense Tracker with Analytics")
+
+# ------------------ DB INIT ------------------
+create_tables()
 
 # ------------------ ADD TRANSACTION ------------------
 st.header("Add Transaction")
@@ -23,10 +36,10 @@ with st.form("transaction_form"):
     description = st.text_input("Description")
     txn_date = st.date_input("Date", value=date.today())
 
-    submitted = st.form_submit_button("Add")
+    submitted = st.form_submit_button("Add Transaction")
 
     if submitted:
-        if amount > 0 and category:
+        if amount > 0 and category.strip():
             add_transaction(
                 amount,
                 category,
@@ -38,29 +51,51 @@ with st.form("transaction_form"):
         else:
             st.error("Amount and category are required.")
 
-# ------------------ ANALYTICS ------------------
-st.header("Analytics")
+# ------------------ OVERVIEW ------------------
+st.header("Overview")
 
-total_income = get_total_by_type("income")
-total_expense = get_total_by_type("expense")
+c1, c2 = st.columns(2)
 
-st.metric("Total Income", f"₹ {total_income}")
-st.metric("Total Expense", f"₹ {total_expense}")
+with c1:
+    st.metric("💵 Total Income", f"₹ {get_total_by_type('income')}")
 
-st.subheader("Category-wise Expense")
+with c2:
+    st.metric("💸 Total Expense", f"₹ {get_total_by_type('expense')}")
+
+# ------------------ CATEGORY BREAKDOWN (TEXT) ------------------
+st.subheader("📂 Expense Breakdown by Category")
+
 category_data = get_category_wise_expense()
 
 if category_data:
     for category, total in category_data:
-        st.write(f"{category} : ₹ {total}")
+        st.write(f"**{category}** : ₹ {total}")
 else:
-    st.write("No expense data.")
+    st.info("No expense data available.")
 
-st.subheader("Monthly Expense")
-monthly_data = get_monthly_expense()
+# ------------------ LOAD DATA FOR CHARTS ------------------
+conn = sqlite3.connect("expenses.db")
+df = pd.read_sql_query(
+    "SELECT category, amount, date FROM transactions WHERE type='expense'",
+    conn
+)
 
-if monthly_data:
-    for month, total in monthly_data:
-        st.write(f"{month} : ₹ {total}")
+# ------------------ ANALYTICS CHARTS ------------------
+st.header("📊 Visual Analytics")
+
+if df.empty:
+    st.warning("No data available for charts.")
 else:
-    st.write("No monthly data.")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.subheader("Category-wise Expenses")
+        fig1 = plot_category_expenses(df)
+        fig1.set_size_inches(5, 4)   # SAME SIZE
+        st.pyplot(fig1)
+
+    with col2:
+        st.subheader("Monthly Expense Trend")
+        fig2 = plot_monthly_expenses(df)
+        fig2.set_size_inches(5, 4)   # SAME SIZE
+        st.pyplot(fig2)
