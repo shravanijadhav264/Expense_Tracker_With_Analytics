@@ -27,6 +27,12 @@ Expense_Tracker_With_Analytics/
 │ └── app_screenshot.png
 └── .gitignore # Exclude venv, .env, cache files
 
+## Application Screenshot
+
+![Expense Tracker UI](Screenshots/app_screenshot1.png)
+![Expense Tracker UI](Screenshots/app_screenshot2.png)
+
+
 ## Future Improvements
 
 - Fill `analytics.py` with category-wise, monthly, and yearly charts
