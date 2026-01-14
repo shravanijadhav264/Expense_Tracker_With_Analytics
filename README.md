@@ -30,7 +30,6 @@ This project focuses on **clean backend logic**, **database-driven transactions*
 ## 🛠 Tech Stack
 
 | Layer | Technology |
-|-----|-----------|
 | Language | Python |
 | UI | Streamlit |
 | Database | SQLite |
@@ -49,8 +48,13 @@ Expense_Tracker_With_Analytics/
 ├── requirements.txt
 └── README.md
 
-
 ---
+
+## Screenhots
+![Dashboard](Screenshots/app_screenshot1.png)
+![Dashboard](Screenshots/app_screenshot2.png)
+![Dashboard](Screenshots/app_screenshot3.png)
+![Dashboard](Screenshots/app_screenshot4.png)
 
 ### 1️⃣ Clone the repository
 ```bash
@@ -69,8 +73,6 @@ Run the application
 streamlit run app.py
 
 ---
-### Screenshots
-
 
 
 👤 Author
