@@ -7,7 +7,10 @@ from database import (
     create_tables,
     add_transaction,
     get_total_by_type,
-    get_category_wise_expense
+    get_category_wise_expense,
+    get_monthly_expense,
+    get_all_transactions,
+    delete_transaction
 )
 
 from analytics import (
@@ -99,3 +102,46 @@ else:
         fig2 = plot_monthly_expenses(df)
         fig2.set_size_inches(5, 4)   # SAME SIZE
         st.pyplot(fig2)
+
+
+
+
+st.header("All Transactions")
+
+transactions = get_all_transactions()
+
+if not transactions:
+    st.info("No transactions found.")
+else:
+    # Table header
+    h1, h2, h3, h4, h5, h6, h7 = st.columns([1, 2, 2, 2, 3, 2, 1])
+    h1.write("ID")
+    h2.write("Amount")
+    h3.write("Category")
+    h4.write("Type")
+    h5.write("Description")
+    h6.write("Date")
+    h7.write("")
+
+    st.divider()
+
+    # Table rows
+    for txn in transactions:
+        txn_id, amount, category, txn_type, description, txn_date = txn
+
+        c1, c2, c3, c4, c5, c6, c7 = st.columns([1, 2, 2, 2, 3, 2, 1])
+
+        c1.write(txn_id)
+        c2.write(f"₹ {amount}")
+        c3.write(category)
+        c4.write(txn_type)
+        c5.write(description)
+        c6.write(txn_date)
+
+        if c7.button("🗑️", key=f"del_{txn_id}"):
+            delete_transaction(txn_id)
+            st.rerun()
+
+
+
+

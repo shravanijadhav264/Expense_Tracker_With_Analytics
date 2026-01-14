@@ -92,3 +92,25 @@ def delete_all_transactions():
 
     conn.commit()
     conn.close()
+
+def get_all_transactions():
+    conn = sqlite3.connect("expenses.db")
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT id, amount, category, type, description, date
+        FROM transactions
+        ORDER BY date DESC
+    """)
+
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+def delete_transaction(txn_id):
+    conn = sqlite3.connect("expenses.db")
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM transactions WHERE id = ?", (txn_id,))
+    conn.commit()
+    conn.close()
+
