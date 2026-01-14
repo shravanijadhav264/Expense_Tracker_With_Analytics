@@ -1,42 +1,79 @@
 # Expense Tracker with Analytics
 
-A simple expense tracker built with Python, SQLite, and Streamlit that allows users to log income and expenses, view category-wise and monthly analytics, and manage personal finances effectively.
+A Python-based Expense Tracker application built using **Streamlit** and **SQLite**, designed to help users track income and expenses with **real-time analytics and visualizations**.
+
+This project focuses on **clean backend logic**, **database-driven transactions**, and **practical data analytics**, making it suitable for beginner-to-intermediate Python portfolios.
 
 ---
 
-## Features
+##  Features
 
-- Add, view, and categorize income and expenses
-- View total income, total expenses, and category-wise breakdown
-- Monthly expense summary
-- **Analytics** handled via `analytics.py` (currently placeholder for future report generation)
-- **Structured data models** in `models.py` (currently placeholder)
-- Data stored in SQLite via `database.py`
-- Streamlit-based interactive web interface
+### Core Functionality
+- Add income and expense transactions
+- Store data persistently using SQLite
+- Automatic ID generation for each transaction
+- Delete individual transactions directly from the table
 
-## Project Structure
+### Analytics
+- Total Income & Total Expense calculation
+- Category-wise expense analysis
+- Monthly expense analysis
+- Bar charts for visual insights
 
+### UI & UX
+- Clean Streamlit interface
+- Side-by-side analytics charts
+- Interactive tables with delete actions
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|-----|-----------|
+| Language | Python |
+| UI | Streamlit |
+| Database | SQLite |
+| Data Analysis | Pandas |
+| Visualization | Matplotlib |
+
+---
+
+## 📂 Project Structure
 Expense_Tracker_With_Analytics/
-├── app.py # Streamlit frontend
-├── database.py # SQLite database connection and CRUD operations
-├── analytics.py # Placeholder: functions for generating reports
-├── models.py # Placeholder: data models / classes
-├── requirements.txt # Python dependencies
-├── README.md # Project documentation
-├── screenshots/
-│ └── app_screenshot.png
-└── .gitignore # Exclude venv, .env, cache files
-
-## Application Screenshot
-
-![Expense Tracker UI](Screenshots/app_screenshot1.png)
-![Expense Tracker UI](Screenshots/app_screenshot2.png)
+│
+├── app.py # Streamlit UI
+├── database.py # SQLite database operations
+├── analytics.py # Data analysis & plotting
+├── expenses.db # SQLite database
+├── requirements.txt
+└── README.md
 
 
-## Future Improvements
+---
 
-- Fill `analytics.py` with category-wise, monthly, and yearly charts
-- Add methods in `models.py` for structured expense objects
-- Implement delete/update functionality in the UI
-- Export expense reports as PDF
- 
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/<shravanijadhav264>/Expense_Tracker_With_Analytics.git
+cd Expense_Tracker_With_Analytics
+
+Create & activate virtual environment
+python -m venv venv
+Windows
+venv\Scripts\activate
+
+Install dependencies
+pip install -r requirements.txt
+
+Run the application
+streamlit run app.py
+
+---
+### Screenshots
+
+
+
+👤 Author
+
+Shravani Jadhav
+Data Analytics Enthusiast
